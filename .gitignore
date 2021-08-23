@@ -26,6 +26,6 @@ tags
 *~
 *.sw[op]
 .vscode
-.idea
+# .idea
 
 venv/
