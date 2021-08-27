@@ -1,89 +1,91 @@
-// network.tf
+# network.tf
 
-// Look AZs in current region
-data "aws_availability_zones" "avialable" {}
+# Fetch AZs in the current region
+data "aws_availability_zones" "available" {
+}
 
 resource "aws_vpc" "main" {
-  cidr_block = var.vpc_cidr
+  cidr_block = "172.17.0.0/16"
   tags = {
-    Name = "${var.app_name}-${var.env}"
+    Name = "${var.app_name}-${var.environment}-VPC"
   }
 }
 
-// Create private subnet in two AZs
+# Create var.az_count private subnets, each in a different AZ
 resource "aws_subnet" "private" {
-  count = var.az_count
-  vpc_id = aws_vpc.main.id
-  cidr_block = element(var.private_subnet_cidr, count.index)
-  availability_zone = data.aws_availability_zones.avialable.names[count.index]
+  count             = var.az_count
+  cidr_block        = cidrsubnet(aws_vpc.main.cidr_block, 8, count.index)
+  availability_zone = data.aws_availability_zones.available.names[count.index]
+  vpc_id            = aws_vpc.main.id
   tags = {
-    Name = "${var.app_name}-${var.env}-private"
+    Name = "${var.app_name}-${var.environment}-private"
   }
 }
 
-//Create public subnet in two AZs
+# Create var.az_count public subnets, each in a different AZ
 resource "aws_subnet" "public" {
-  count = var.az_count
-  cidr_block = element(var.public_subnet_cidr, count.index)
-  vpc_id = aws_vpc.main.id
-  availability_zone = data.aws_availability_zones.avialable.names[count.index]
+  count                   = var.az_count
+  cidr_block              = cidrsubnet(aws_vpc.main.cidr_block, 8, var.az_count + count.index)
+  availability_zone       = data.aws_availability_zones.available.names[count.index]
+  vpc_id                  = aws_vpc.main.id
   map_public_ip_on_launch = true
   tags = {
-    Name = "${var.app_name}-${var.env}-public"
+    Name = "${var.app_name}-${var.environment}-public"
   }
 }
 
-// Internet Gateway for public subnet
-resource "aws_internet_gateway" "main" {
+# Internet Gateway for the public subnet
+resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.main.id
   tags = {
-    Name = "${var.app_name}-${var.env}-ig"
+    Name = "${var.app_name}-${var.environment}-gw"
   }
 }
 
-// Route the public subnet traffic through the IGW
+# Route the public subnet traffic through the IGW
 resource "aws_route" "internet_access" {
-  route_table_id = aws_vpc.main.main_route_table_id
+  route_table_id         = aws_vpc.main.main_route_table_id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id = aws_internet_gateway.main.id
+  gateway_id             = aws_internet_gateway.gw.id
 }
 
-// Create NAT gateway with Elastic IP for each private subnet to get internet connect
+# Create a NAT gateway with an Elastic IP for each private subnet to get internet connectivity
 resource "aws_eip" "gw" {
-  count = var.az_count
-  vpc = true
-  depends_on = [aws_internet_gateway.main]
+  count      = var.az_count
+  vpc        = true
+  depends_on = [aws_internet_gateway.gw]
   tags = {
-    Name = "${var.app_name}-${var.env}-EIP"
+    Name = "${var.app_name}-${var.environment}-EIP"
   }
 }
 
 resource "aws_nat_gateway" "gw" {
-  count = var.az_count
-  subnet_id = element(aws_subnet.public.*.id, count.index)
+  count         = var.az_count
+  subnet_id     = element(aws_subnet.public.*.id, count.index)
   allocation_id = element(aws_eip.gw.*.id, count.index)
   tags = {
-    Name = "${var.app_name}-${var.env}-GW"
+    Name = "${var.app_name}-${var.environment}-GW"
   }
 }
 
-// Create a new route table for the private subnets across NAT
+# Create a new route table for the private subnets, make it route non-local traffic through the NAT gateway to the internet
 resource "aws_route_table" "private" {
-  count = var.az_count
+  count  = var.az_count
   vpc_id = aws_vpc.main.id
 
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block     = "0.0.0.0/0"
     nat_gateway_id = element(aws_nat_gateway.gw.*.id, count.index)
   }
-  tags {
-    Name = "${var.app_name}-${var.env}-RT"
+  tags = {
+    Name = "${var.app_name}-${var.environment}-RT"
   }
 }
 
-// Explicitly associate the newly created route tables to the private subnets
+# Explicitly associate the newly created route tables to the private subnets (so they don't default to the main route table)
 resource "aws_route_table_association" "private" {
-  count = var.az_count
-  subnet_id = element(aws_subnet.private.*.id, count.index)
+  count          = var.az_count
+  subnet_id      = element(aws_subnet.private.*.id, count.index)
   route_table_id = element(aws_route_table.private.*.id, count.index)
 }
+
