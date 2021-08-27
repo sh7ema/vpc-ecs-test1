@@ -36,7 +36,7 @@ resource "aws_dynamodb_table" "terraform_locks" {
 
 terraform {
   backend "s3" {
-    bucket = "my-test-shlema2"
+    bucket = var.bucket_name
     key = "my-test/mykey.tfstate"
     region = "eu-central-1"
     dynamodb_table = "my-test-shlema-locks"
