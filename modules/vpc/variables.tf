@@ -11,3 +11,11 @@ variable "app_port" {
 variable "app_name" {
   type = string
 }
+
+variable "aws_region" {
+  description = "aws region"
+}
+
+variable "aws_profile" {
+  description = "aws profile"
+}
