@@ -5,5 +5,8 @@ module "s3_terraform_state" {
 
 module "vpc" {
     source = "./modules/vpc"
-    bucket = var.bucket_name
+    bucket_name = var.bucket_name
+    aws_region = var.aws_region
+    aws_profile = var.aws_profile
+    app_name = var.app_name
 }
