@@ -1,3 +1,4 @@
+bucket_name = "flaskapp-dev-eu-central-1-shlema-1"
 environment = "dev"
 app_name = "httpApp"
 aws_profile = "default"

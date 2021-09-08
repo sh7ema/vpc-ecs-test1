@@ -4,15 +4,15 @@ provider "aws" {
 }
 
 terraform {
-  backend "s3" {
-    encrypt = true
-    bucket  = "flaskapp-dev-eu-central-1-shlema"
-    region  = "eu-central-1"
-    key     = "state"
-  }
+  # backend "s3" {
+  #   encrypt = true
+  #   bucket  = "flaskapp-dev-eu-central-1-shlema-1"
+  #   region  = "eu-central-1"
+  #   key     = "state"
+  # }
   required_providers {
     aws = {
-      version = "~> 3.35"
+      version = "~> 3.55"
     }
   }
 }

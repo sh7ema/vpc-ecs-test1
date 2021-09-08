@@ -19,3 +19,7 @@ variable "aws_region" {
 variable "aws_profile" {
   description = "aws profile"
 }
+
+variable "bucket_name" {
+  type = string
+}
