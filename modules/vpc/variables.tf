@@ -20,6 +20,14 @@ variable "aws_profile" {
   description = "aws profile"
 }
 
-variable "bucket_name" {
+# variable "bucket_name" {
+#   type = string
+# }
+
+variable "environment" {
   type = string
+}
+
+variable "health_check_path" {
+  default = "/"
 }
