@@ -14,8 +14,9 @@ resource "aws_rds_cluster" "default" {
   database_name           = var.database_name
   master_username         = var.master_username
   master_password         = var.master_password
-  backup_retention_period = 5
-  preferred_backup_window = "07:00-09:00"
+  backup_retention_period = 0
+  # preferred_backup_window = "07:00-09:00"
+  skip_final_snapshot     = false
 
   tags = {
     Name = "${var.app_name}-${var.environment}-db-cluster"

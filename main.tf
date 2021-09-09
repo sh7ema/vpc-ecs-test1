@@ -12,14 +12,15 @@ module "vpc" {
     environment = var.environment
 }
 
-module "rds" {
-    source = "./modules/rds"
-    aws_region = var.aws_region
-    aws_profile = var.aws_profile
-    app_name = var.app_name
-    environment = var.environment
-    database_name = var.database_name
-    master_username = var.master_username
-    master_password = var.master_password
-    subnet_ids = module.vpc.subnets
-}
+# module "rds" {
+#     source = "./modules/rds"
+#     aws_region = var.aws_region
+#     aws_profile = var.aws_profile
+#     app_name = var.app_name
+#     environment = var.environment
+#     database_name = var.database_name
+#     master_username = var.master_username
+#     master_password = var.master_password
+#     subnet_ids = module.vpc.subnets
+    
+# }
