@@ -53,3 +53,18 @@ variable "git_trigger_event" {
 variable "app_count" {
     default = 1
 }
+
+variable "database_name" {
+    type = string
+    default = ""
+}
+
+variable "master_username" {
+    type = string
+    default = ""
+}
+
+variable "master_password" {
+    type = string
+    default = ""
+}
