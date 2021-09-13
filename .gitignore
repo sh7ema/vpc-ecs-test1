@@ -8,6 +8,7 @@
 terraform.tfvars
 secrets.hcl
 secret.tfvars
+.history
 
 # Module directory
 .terraform/
