@@ -39,6 +39,6 @@ module "init-build" {
     aws_profile = var.aws_profile
     environment = var.environment
     app_name = var.app_name
-    working_dir = "${path.root}/app"
+    working_dir = "${path.root}/../app"
     image_tag = var.image_tag
 }

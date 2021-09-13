@@ -32,13 +32,3 @@ module "ecr" {
     environment = var.environment
     app_name = var.app_name
 }
-
-module "init-build" {
-    source = "./modules/init-build"
-    aws_region = var.aws_region
-    aws_profile = var.aws_profile
-    environment = var.environment
-    app_name = var.app_name
-    working_dir = "${path.root}/app"
-    image_tag = var.image_tag
-}

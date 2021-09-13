@@ -1,6 +1,6 @@
 bucket_name = "flaskapp-dev-eu-central-1-shlema-1"
 environment = "dev"
-app_name = "httpapp"
+app_name = "httpApp"
 aws_profile = "default"
 aws_account = "055476152654"
 aws_region = "eu-central-1"
