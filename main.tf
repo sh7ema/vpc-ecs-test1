@@ -58,3 +58,18 @@ module "ecs" {
     aws_security_group_lb_id = module.vpc.security_group_lb_id
     target_group_arn = module.vpc.target_group_arn
 }
+
+module "codebuild" {
+    source = "./modules/codebuild"
+    aws_region = var.aws_region
+    aws_profile = var.aws_profile
+    environment = var.environment
+    app_name = var.app_name
+    vpc_id = module.vpc.vpc_id
+    subnets = module.vpc.subnets
+    github_oauth_token = var.github_oauth_token
+    repo_url = var.repo_url
+    branch_pattern = var.branch_pattern
+    git_trigger_event = var.git_trigger_event
+    build_spec_file = "clean_terraform/config/buildspec.yml"
+}

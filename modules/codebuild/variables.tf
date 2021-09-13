@@ -6,8 +6,6 @@ variable "aws_profile" {
   description = "aws profile"
 }
 
-variable "remote_state_bucket" {}
-
 variable "repo_url" {
   description = "URL to Github repository to fetch source from"
 }
