@@ -75,16 +75,9 @@ locals {
 
 variable "aws_security_group_lb_id" {
   type = list(string)
+  
 }
 
 variable "aws_vps_main_id" {
-  type = string
-}
-
-variable "aws_subnet_private_id" {
-  type = list(string)
-}
-
-variable "target_group_arn" {
   type = string
 }

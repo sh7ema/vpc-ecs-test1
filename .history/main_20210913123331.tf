@@ -55,6 +55,6 @@ module "ecs" {
     app_count = var.app_count
     aws_subnet_private_id = module.vpc.subnets
     aws_vps_main_id = module.vpc.vpc_id
-    aws_security_group_lb_id = module.vpc.security_group_lb_id
+    security_groups = module.vpc.security_group_lb_id
     target_group_arn = module.vpc.target_group_arn
 }

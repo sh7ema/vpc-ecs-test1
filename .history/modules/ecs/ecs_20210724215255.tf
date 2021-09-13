@@ -39,16 +39,16 @@ resource "aws_ecs_service" "main" {
 
   network_configuration {
     security_groups  = [aws_security_group.ecs_tasks.id]
-    subnets          = var.aws_subnet_private_id
+    subnets          = aws_subnet.private.*.id
     assign_public_ip = true
   }
 
   load_balancer {
-    target_group_arn = var.target_group_arn
+    target_group_arn = aws_alb_target_group.app.id
     container_name   = "${var.app_name}-${var.environment}-app"
     container_port   = var.app_port
   }
 
-  depends_on = [aws_iam_role_policy.ecs_task_execution_role]
+  depends_on = [aws_alb_listener.front_end, aws_iam_role_policy.ecs_task_execution_role]
 }
 

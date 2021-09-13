@@ -84,7 +84,3 @@ variable "aws_vps_main_id" {
 variable "aws_subnet_private_id" {
   type = list(string)
 }
-
-variable "target_group_arn" {
-  type = string
-}

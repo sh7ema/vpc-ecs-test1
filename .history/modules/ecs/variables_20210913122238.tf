@@ -74,7 +74,7 @@ locals {
 }
 
 variable "aws_security_group_lb_id" {
-  type = list(string)
+  type = string
 }
 
 variable "aws_vps_main_id" {

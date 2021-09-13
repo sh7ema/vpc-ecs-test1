@@ -5,10 +5,10 @@ provider "aws" {
 
 terraform {
   # The configuration for this backend will be filled in by Terragrunt
-  # backend "s3" {}
+  backend "s3" {}
   required_providers {
     aws = {
-      version = "~> 3.55"
+      version = "~> 3.35"
     }
   }
 }

@@ -43,7 +43,7 @@ module "init-build" {
     image_tag = var.image_tag
 }
 
-module "ecs" {
+module "ecs-cluster" {
     source = "./modules/ecs"
     aws_region = var.aws_region
     aws_profile = var.aws_profile
@@ -51,10 +51,6 @@ module "ecs" {
     app_name = var.app_name
     image_tag = var.image_tag
     ecr_repository_url = module.ecr.ecr_repository_url
-    taskdef_template = "${path.root}/modules/ecs/cb_app.json.tpl"
+    taskdef_template = "${path.root}/../modules/cluster/cb_app.json.tpl"
     app_count = var.app_count
-    aws_subnet_private_id = module.vpc.subnets
-    aws_vps_main_id = module.vpc.vpc_id
-    aws_security_group_lb_id = module.vpc.security_group_lb_id
-    target_group_arn = module.vpc.target_group_arn
 }

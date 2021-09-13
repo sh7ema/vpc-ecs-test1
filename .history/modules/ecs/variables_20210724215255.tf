@@ -5,6 +5,9 @@ variable "aws_region" {
 variable "aws_profile" {
   description = "aws profile"
 }
+
+variable "remote_state_bucket" {}
+
 variable "ecs_task_execution_role_name" {
   description = "ECS task execution role name"
   default = "TaskExecutionRole"
@@ -15,15 +18,15 @@ variable "ecs_task_role_name" {
   default = "TaskRole"
 }
 
-# variable "ecs_auto_scale_role_name" {
-#   description = "ECS auto scale role Name"
-#   default = "AutoScaleRole"
-# }
+variable "ecs_auto_scale_role_name" {
+  description = "ECS auto scale role Name"
+  default = "AutoScaleRole"
+}
 
-# variable "az_count" {
-#   description = "Number of AZs to cover in a given region"
-#   default     = "2"
-# }
+variable "az_count" {
+  description = "Number of AZs to cover in a given region"
+  default     = "2"
+}
 
 variable "app_port" {
   description = "Port exposed by the docker image to redirect traffic to"
@@ -71,20 +74,4 @@ variable "taskdef_template" {
 
 locals {
   app_image = format("%s:%s", var.ecr_repository_url, var.image_tag)
-}
-
-variable "aws_security_group_lb_id" {
-  type = list(string)
-}
-
-variable "aws_vps_main_id" {
-  type = string
-}
-
-variable "aws_subnet_private_id" {
-  type = list(string)
-}
-
-variable "target_group_arn" {
-  type = string
 }

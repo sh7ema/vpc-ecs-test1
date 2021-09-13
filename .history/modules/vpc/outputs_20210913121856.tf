@@ -13,7 +13,7 @@ output "subnets" {
 }
 
 output "security_group_lb_id" {
-  value = aws_security_group.lb.*.id
+  value = aws_security_group.lb.id
 }
 
 output "target_group_arn" {
