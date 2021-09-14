@@ -1,7 +1,7 @@
 TAG ?= latest
 REGISTRY_ID ?= 055476152654
 REPOSITORY_REGION ?= eu-central-1
-APP_NAME ?= flaskapp
+APP_NAME ?= httpapp
 ENV_NAME ?= dev
 REPO_NAME = $(REGISTRY_ID).dkr.ecr.$(REPOSITORY_REGION).amazonaws.com/${APP_NAME}-${ENV_NAME}
 
