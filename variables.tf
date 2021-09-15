@@ -1,7 +1,7 @@
 variable "bucket_name" {
   type        = string
   description = "S3 Bucket name"
-  default     = "flaskapp-dev-eu-central-1-shlema-1"
+  # default     = "flaskapp-dev-eu-central-1-shlema-1"
 }
 
 variable "aws_region" {
