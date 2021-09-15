@@ -6,7 +6,7 @@ provider "aws" {
 terraform {
   backend "s3" {
     encrypt = true
-    bucket  = "flaskapp-dev-eu-central-1-shlema-1"
+    bucket  = "flaskapp-dev-eu-central-1-shlema-2"
     region  = "eu-central-1"
     key     = "state"
   }

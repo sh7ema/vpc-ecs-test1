@@ -172,7 +172,7 @@ terraform destroy -target="module.codebuild" --var-file=./config/dev.tfvars
 terraform destroy -target="module.ecs" --var-file=./config/dev.tfvars
 terraform destroy -target="module.init-build" --var-file=./config/dev.tfvars
 terraform destroy -target="module.vpc" --var-file=./config/dev.tfvars
-terraform destroy -target=module.ecr --var-file=./config/dev.tfvars
+terraform destroy -target="module.ecr" --var-file=./config/dev.tfvars
 ```
 
 S3 Bucket can be deleted manually using AWS console or AWS Cli. Or just leave it intact. If you want to deploy the application later, it will use it again. Even if you will use solution with Terragrunt, you leave this bucket because Terragrunt will create a different one.
